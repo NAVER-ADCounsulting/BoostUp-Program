@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Global AD Boost Up Program — NAVER</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700;800&family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=5" />
+  <style>
+    /* ── 대문 타이틀 ── */
+    .hl-naver {
+      font-size: clamp(2rem, 4.4vw, 4rem) !important;
+      font-weight: 900 !important;
+      letter-spacing: -0.02em !important;
+      color: rgba(255,255,255,0.5) !important;
+      line-height: 0.95 !important;
+      margin-bottom: 0 !important;
+    }
+    .hl-gc {
+      font-size: clamp(2.4rem, 5.4vw, 4.8rem) !important;
+      font-weight: 800 !important;
+      letter-spacing: -0.02em !important;
+      color: #ffffff !important;
+      line-height: 1 !important;
+      margin: 16px 0 12px !important;
+    }
+    .hl-program {
+      font-size: clamp(3rem, 7vw, 6.5rem) !important;
+      font-weight: 800 !important;
+      letter-spacing: -0.02em !important;
+      line-height: 1.05 !important;
+      padding-bottom: 0.15em !important;
+    }
+    .hero-scroll-hint { display: none !important; }
+
+    /* ── 상세 콘텐츠 초기 숨김 ── */
+    #detail { display: none; }
+
+    /* ── 전체 중앙 정렬 ── */
+    .prog-hero-inner {
+      grid-template-columns: 1fr !important;
+      justify-items: center !important;
+    }
+    .prog-hero-text {
+      max-width: 740px !important;
+      text-align: center !important;
+      align-items: center !important;
+    }
+    .prog-hero-text p { max-width: 600px; margin-left: auto; margin-right: auto; }
+    .prog-hero-actions { justify-content: center !important; }
+
+    /* ── 참여 조건 카드 (1열) ── */
+    .cond-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-width: 680px;
+      margin: 48px auto 0;
+    }
+    .cond-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      text-align: left;
+    }
+    .cond-num {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: 0.12em;
+      min-width: 24px;
+      padding-top: 2px;
+    }
+    .cond-card p {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-1);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* ── 운영 방식 카드 (1열) ── */
+    .overview-grid {
+      grid-template-columns: 1fr !important;
+      max-width: 720px !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+    .overview-card { text-align: left; }
+
+    /* ── 섹션 타이틀 초록색 ── */
+    .section-header h2, .cta-block h2 { color: var(--green) !important; }
+    /* ── 한글 단어 중간 줄바꿈 방지 ── */
+    .section-header p, .prog-hero-text p, .cta-block p { word-break: keep-all; }
+    /* ── section-header 설명 너비 확장 ── */
+    .section-header p { max-width: 780px !important; }
+    /* ── prog-hero 타이틀 한 줄 맞춤 ── */
+    .prog-hero-text { max-width: 960px !important; }
+    .prog-hero-text h1 { font-size: clamp(2rem, 4.5vw, 3.8rem) !important; }
+
+    /* ── 서비스 테이블: 텍스트 중앙정렬 ── */
+    .svc-table th { text-align: center !important; }
+    .svc-table td { text-align: center !important; vertical-align: middle; }
+    /* 호버 시 rowspan 셀 제외 */
+    .svc-table tbody tr:hover td { background: transparent !important; }
+    .svc-table tbody tr:hover td:not([rowspan]) { background: rgba(3,199,90,0.025) !important; }
+
+    /* ── 광고 지면 카드 (1열, 세로형: 텍스트 상단 + 이미지 하단) ── */
+    .placements-grid {
+      grid-template-columns: 1fr !important;
+      max-width: 900px;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      gap: 24px;
+    }
+    .placement-card {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: stretch !important;
+      padding: 0 !important;
+      overflow: hidden;
+    }
+    .pl-mock {
+      width: 100%;
+      min-height: 260px;
+      background: var(--bg-2);
+      border-top: 1px solid var(--border);
+      border-radius: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .pl-mock img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+    .pl-content {
+      padding: 28px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .pl-content .pl-platform { margin-bottom: 0; }
+    .pl-content h4 { margin-bottom: 0; }
+    .pl-content p { margin-bottom: 0; font-size: 0.9rem; line-height: 1.7; }
+
+    /* ── 페이지 전환 오버레이 ── */
+    #tx-overlay {
+      position: fixed;
+      inset: 0;
+      background: #03C75A;
+      transform: translateY(100%);
+      z-index: 9999;
+      pointer-events: none;
+      transition: transform 0.65s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    #tx-overlay.active  { transform: translateY(0);    pointer-events: all; }
+    #tx-overlay.done    { transform: translateY(-100%); pointer-events: none; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav-hero">
+    <div class="nav-inner">
+      <div></div>
+      <div class="globe-wrap">
+        <button class="globe-btn" id="globeBtn" aria-label="언어 선택">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+          <span id="globeLangLabel">KO</span>
+        </button>
+        <div class="lang-dropdown">
+          <div class="lang-dropdown-inner">
+            <button class="lang-opt active" data-lang="ko">한국어</button>
+            <button class="lang-opt" data-lang="en">English</button>
+            <button class="lang-opt" data-lang="zh">中文</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── 대문 ── -->
+  <section class="hero">
+    <div class="hero-photo-wrap">
+      <div class="hero-photo-placeholder"></div>
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-glow"></div>
+    <div class="hero-grid-pattern"></div>
+    <div class="hero-body">
+      <h1 class="hero-headline">
+        <span class="hl-naver">NAVER</span>
+        <span class="hl-gc">Global Client</span>
+        <span class="hl-program">Boost-Up Program</span>
+      </h1>
+      <div class="hero-actions">
+        <a href="#detail" class="btn btn-glass" id="enterBtn" data-i18n="hero.cta">프로그램 알아보기</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 상세 콘텐츠 ── -->
+  <div id="detail">
+
+    <!-- PROGRAM INTRO -->
+    <section class="prog-hero">
+      <div class="prog-hero-bg"></div>
+      <div class="prog-hero-grid"></div>
+      <div class="container">
+        <div class="prog-hero-inner">
+          <div class="prog-hero-text">
+            <div class="badge" data-i18n="ph.badge">BOOST UP PROGRAM</div>
+            <h1>
+              <span data-i18n="ph.title.1">BOOST UP your marketing</span><br>
+              <span data-i18n="ph.title.2">with <span class="gradient-text">NAVER AD</span></span>
+            </h1>
+            <p data-i18n="ph.desc">네이버 광고는 신규 글로벌 클라이언트를 위해 2개월 파일럿 프로그램을 지원드립니다. 캠페인 컨설팅부터 프리미엄 광고 지면 서비스까지, 네이버 광고 생태계에 안착하여 마케팅 성과를 제고해보세요.</p>
+            <div class="prog-hero-actions">
+              <a href="mailto:dl_global_clients@navercorp.com" class="btn btn-primary" data-i18n="ph.cta">문의하기</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- 참여 조건 -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <div class="badge" data-i18n="cond.badge">프로그램 참여 조건</div>
+          <h2 data-i18n="cond.title">어떤 광고주가 참여할 수 있나요?</h2>
+        </div>
+        <div class="cond-grid">
+          <div class="cond-card fade-up">
+            <span class="cond-num">01</span>
+            <p data-i18n="cond.c1">2025년 NAVER 광고 집행 이력이 없는 신규 해외 클라이언트</p>
+          </div>
+          <div class="cond-card fade-up">
+            <span class="cond-num">02</span>
+            <p data-i18n="cond.c2">월 광고비 최소 3,000만원 이상 약정 (VAT 별도)</p>
+          </div>
+          <div class="cond-card fade-up">
+            <span class="cond-num">03</span>
+            <p data-i18n="cond.c3">최초 2개월 연속 집행 원칙 (예외 적용은 사전 협의 필요)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- 운영 방식 -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <div class="badge" data-i18n="ov.badge">프로그램 개요</div>
+          <h2 data-i18n="ov.title">어떻게 운영되나요?</h2>
+          <p data-i18n="ov.desc">Boost Up Program은 신규 글로벌 광고주가 네이버 광고 생태계에 성공적으로 안착할 수 있도록 설계된 2개월 파일럿 집중 지원 프로그램입니다.</p>
+        </div>
+        <div class="overview-grid">
+          <div class="overview-card fade-up">
+            <div class="ov-num">01</div>
+            <h3 data-i18n="ov1.title">파일럿 참여 (2개월)</h3>
+            <p data-i18n="ov1.desc">최초 광고비 약정월로부터 2개월 간 광고 컨설팅과 프리미엄 지면 서비스를 집중 지원합니다.</p>
+          </div>
+          <div class="overview-card fade-up">
+            <div class="ov-num">02</div>
+            <h3 data-i18n="ov2.title">프리미엄 지면 서비스 제공</h3>
+            <p data-i18n="ov2.desc">월 광고비 구간에 따라 최대 60%의 서비스율로 PC 타임보드, MO 피드 1st 등 네이버 핵심 지면을 체험해보실 수 있도록 추가 지원합니다.</p>
+          </div>
+          <div class="overview-card fade-up">
+            <div class="ov-num">03</div>
+            <h3 data-i18n="ov3.title">Key Account 전환</h3>
+            <p data-i18n="ov3.desc">파일럿 이후 NAVER 광고 활용도가 지속 상승할 것으로 판단되는 광고주에 한해 Key Account 지위를 부여하고 전담팀과의 장기 파트너십으로 전환합니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- 서비스 테이블 -->
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section-header">
+          <div class="badge" data-i18n="svc.badge">서비스 테이블</div>
+          <h2 data-i18n="svc.title">월 광고비 구간별 서비스 안내</h2>
+          <p data-i18n="svc.desc">월 광고비(DA+SA) 집행 구간에 따라 프리미엄 광고 상품을 지원합니다. 서비스 구좌는 분기 내 자유롭게 활용하실 수 있습니다.</p>
+        </div>
+        <div class="table-wrap">
+          <table class="svc-table">
+            <thead>
+              <tr>
+                <th style="width:28%" data-i18n="svc.th1">월 광고비 집행 구간</th>
+                <th style="width:14%" data-i18n="svc.th2">서비스율</th>
+                <th data-i18n="svc.th3">서비스 제공 구좌 (하기 구좌 mix)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><div class="svc-name" data-i18n="svc.tier1">3천만 ~ 5천만원</div></td>
+                <td><span class="check">35%</span></td>
+                <td rowspan="5" style="vertical-align:middle; padding:28px 24px;">
+                  <ul style="list-style:none; display:flex; flex-direction:column; gap:12px; width:fit-content; margin:auto; text-align:left;">
+                    <li style="display:flex; align-items:center; gap:10px;"><span style="color:var(--green); font-weight:700; font-size:1rem;">›</span> <span data-i18n="pl1.title">PC 타임보드</span></li>
+                    <li style="display:flex; align-items:center; gap:10px;"><span style="color:var(--green); font-weight:700; font-size:1rem;">›</span> <span data-i18n="pl2.title">PC 롤링보드</span></li>
+                    <li style="display:flex; align-items:center; gap:10px;"><span style="color:var(--green); font-weight:700; font-size:1rem;">›</span> <span data-i18n="pl3.title">MO 피드 1st</span></li>
+                    <li style="display:flex; align-items:center; gap:10px;"><span style="color:var(--green); font-weight:700; font-size:1rem;">›</span> <span data-i18n="pl5.title">MO 스마트채널</span></li>
+                    <li style="display:flex; align-items:center; gap:10px;"><span style="color:var(--green); font-weight:700; font-size:1rem;">›</span> <span data-i18n="pl4.title">MO 브랜딩 DA</span> <span data-i18n="svc.cap" style="color:var(--text-3); font-size:0.78rem; margin-left:4px;">(제공 상한 존재)</span></li>
+                    <li style="display:flex; align-items:center; gap:10px;"><span style="color:var(--green); font-weight:700; font-size:1rem;">›</span> <span data-i18n="pl6.title">인스트림 동영상</span></li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td><div class="svc-name" data-i18n="svc.tier2">5천만 ~ 7천만원</div></td>
+                <td><span class="check">40%</span></td>
+              </tr>
+              <tr>
+                <td><div class="svc-name" data-i18n="svc.tier3">7천만 ~ 1억원</div></td>
+                <td><span class="check">45%</span></td>
+              </tr>
+              <tr>
+                <td><div class="svc-name" data-i18n="svc.tier4">1억 ~ 3억원</div></td>
+                <td><span class="check">50%</span></td>
+              </tr>
+              <tr>
+                <td><div class="svc-name" data-i18n="svc.tier5">3억원 이상</div></td>
+                <td><span class="check">60%</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:16px; font-size:0.82rem; color:var(--text-3); line-height:1.9;">
+          <span data-i18n="svc.note1">* 타임보드, 롤링보드, 피드 1st는 영업일 기준 D-15 이내 잔여 구좌에 한해 제공됩니다.</span><br>
+          <span data-i18n="svc.note2">* 집행 광고비는 VAT 별도 기준입니다. 2026년 내 유료 집행 건에 한함.</span>
+        </p>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- 제공 광고 지면 -->
+    <section class="section" id="placements">
+      <div class="container">
+        <div class="section-header">
+          <div class="badge" data-i18n="pl.badge">서비스 지면</div>
+          <h2 data-i18n="pl.title">제공 광고 지면</h2>
+          <p data-i18n="pl.desc">Boost Up Program 서비스로 제공되는 6가지 네이버 프리미엄 광고 지면입니다. 구간 내 서비스 금액 범위에서 자유롭게 구성할 수 있습니다.</p>
+        </div>
+        <div class="placements-grid">
+
+          <div class="placement-card fade-up">
+            <div class="pl-content">
+              <div class="pl-platform">PC TIMEBOARD</div>
+              <h4 data-i18n="pl1.title">PC 타임보드</h4>
+              <p data-i18n="pl1.desc">NAVER PC 홈의 가장 주요한 중앙 구역을 시간 단위로 독점하는 대형 배너.<br>영업일 D-15 이내 잔여 구좌에 한해 제공됩니다.</p>
+            </div>
+            <div class="pl-mock"><img src="img/PC_timeboard.png" alt="PC 타임보드"></div>
+          </div>
+
+          <div class="placement-card fade-up">
+            <div class="pl-content">
+              <div class="pl-platform">PC ROLLINGBOARD</div>
+              <h4 data-i18n="pl2.title">PC 롤링보드</h4>
+              <p data-i18n="pl2.desc">NAVER PC 홈 우측 로그인 창 하단에 노출되는 대형 배너.<br>영업일 D-15 이내 잔여 구좌에 한해 제공됩니다.</p>
+            </div>
+            <div class="pl-mock"><img src="img/PC_rollingboard.png" alt="PC 롤링보드"></div>
+          </div>
+
+          <div class="placement-card fade-up">
+            <div class="pl-content">
+              <div style="display:flex; flex-direction:column; gap:12px;">
+                <div style="background:var(--bg-2); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px;">
+                  <div class="pl-platform">MO FEED 1ST</div>
+                  <h4 data-i18n="pl3.title">MO 피드 1st</h4>
+                  <p data-i18n="pl3.desc" style="margin-top:6px;">NAVER MO 스포츠 또는 엔터 판 내 시간 단위로 고정 노출되는 피드형 배너.<br>영업일 D-15 이내 잔여 구좌에 한해 제공됩니다.</p>
+                </div>
+                <div style="background:var(--bg-2); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px;">
+                  <div class="pl-platform">MO BRANDING DA</div>
+                  <h4 data-i18n="pl4.title">MO 브랜딩 DA</h4>
+                  <p data-i18n="pl4.desc" style="margin-top:6px;">NAVER MO 메인 뉴스 판에 돌출도 있게 브랜드를 노출시킬 수 있는 이미지 광고.<br>CPM 단위로 노출량이 정해집니다.</p>
+                </div>
+                <div style="background:var(--bg-2); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px;">
+                  <div class="pl-platform">MO SMARTCHANNEL</div>
+                  <h4 data-i18n="pl5.title">MO 스마트채널</h4>
+                  <p data-i18n="pl5.desc" style="margin-top:6px;">NAVER MO 메인 뉴스 판의 최상단에 노출되는 띠배너형 광고.<br>CPM 단위로 노출량이 정해집니다.</p>
+                </div>
+              </div>
+            </div>
+            <div class="pl-mock"><img src="img/MO.png" alt="MO 화면"></div>
+          </div>
+
+          <div class="placement-card fade-up">
+            <div class="pl-content">
+              <div class="pl-platform">INSTREAM VIDEO</div>
+              <h4 data-i18n="pl6.title">인스트림 동영상</h4>
+              <p data-i18n="pl6.desc">네이버TV, 스포츠 등 네이버 주요 동영상 서비스에서 재생되는 광고로,<br>콘텐츠 재생 전 주목도 높은 위치에 노출. CPM 단위로 노출량이 정해집니다.</p>
+            </div>
+            <div class="pl-mock"><img src="img/Instream Video.png" alt="인스트림 동영상"></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="contact-section section" id="contact">
+      <div class="container">
+        <div class="cta-block fade-up">
+          <div class="badge" data-i18n="ct.badge">도입 문의</div>
+          <h2 data-i18n="ct.title">지금 Boost Up 하세요!</h2>
+          <p data-i18n="ct.desc">글로벌 광고주를 위한 NAVER 전담팀이 최적의 광고 전략을 함께 설계해 드립니다.</p>
+          <div class="cta-actions">
+            <a href="mailto:dl_global_clients@navercorp.com" class="btn btn-primary" data-i18n="ct.btn">담당자 연결하기</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container">
+        <div class="footer-inner">
+          <div class="footer-logo">
+            <div class="nav-logo-mark">N</div>
+            <div>
+              <div class="nav-logo-text">NAVER AD</div>
+              <div class="nav-logo-sub" data-i18n="footer.sub">Global AD Consulting</div>
+            </div>
+          </div>
+          <div class="footer-right">
+            <div style="display:flex; gap:20px; margin-bottom:6px;">
+              <a href="#" class="footer-copy" data-i18n="footer.privacy" style="color:var(--text-3);">개인정보처리방침</a>
+              <a href="#" class="footer-copy" data-i18n="footer.terms" style="color:var(--text-3);">이용약관</a>
+            </div>
+            <div class="footer-copy" data-i18n="footer.copy">© 2025 NAVER Corp. All rights reserved.</div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div><!-- /#detail -->
+
+  <div id="tx-overlay"></div>
+
+  <script src="js/i18n.js"></script>
+  <script>
+    document.getElementById('enterBtn').addEventListener('click', function (e) {
+      e.preventDefault();
+      var overlay = document.getElementById('tx-overlay');
+      var detail  = document.getElementById('detail');
+      overlay.classList.add('active');
+      setTimeout(function () {
+        detail.style.display = 'block';
+        window.scrollTo({ top: detail.offsetTop, behavior: 'instant' });
+        overlay.classList.add('done');
+        setTimeout(function () { overlay.remove(); }, 700);
+      }, 700);
+    });
+  </script>
+</body>
+</html>
