@@ -38,6 +38,31 @@
     /* ── 상세 콘텐츠 초기 숨김 ── */
     #detail { display: none; }
 
+    /* ── prog-hero 배경 이미지 ── */
+    .prog-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('img/background_2.png') center / cover no-repeat;
+      opacity: 0.18;
+      pointer-events: none;
+      z-index: 0;
+    }
+    /* ── prog-hero 하단 페이드 아웃 ── */
+    .prog-hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 220px;
+      background: linear-gradient(to bottom, transparent, var(--bg-0));
+      pointer-events: none;
+      z-index: 0;
+    }
+    /* ── prog-hero 콘텐츠 그라데이션 위로 ── */
+    .prog-hero .container { position: relative; z-index: 2; }
+
     /* ── 전체 중앙 정렬 ── */
     .prog-hero-inner {
       grid-template-columns: 1fr !important;
@@ -153,6 +178,42 @@
     .pl-content h4 { margin-bottom: 0; }
     .pl-content p { margin-bottom: 0; font-size: 0.9rem; line-height: 1.7; }
 
+    /* ── Hero 버튼 롤링 빛 효과 ── */
+    @property --enterBtn-angle {
+      syntax: '<angle>';
+      initial-value: 0deg;
+      inherits: false;
+    }
+    #enterBtn {
+      position: relative;
+      isolation: isolate;
+      box-shadow: 0 0 18px rgba(3,199,90,0.35);
+    }
+    #enterBtn::before {
+      content: '';
+      position: absolute;
+      inset: -1.5px;
+      border-radius: 10px;
+      padding: 1.5px;
+      background: conic-gradient(
+        from var(--enterBtn-angle),
+        transparent 0deg,
+        rgba(3,199,90,0.7) 50deg,
+        rgba(0,232,160,1) 90deg,
+        rgba(3,199,90,0.7) 130deg,
+        transparent 210deg
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: destination-out;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      z-index: -1;
+      animation: rotate-enterBtn 4s linear infinite;
+    }
+    @keyframes rotate-enterBtn {
+      to { --enterBtn-angle: 360deg; }
+    }
+
     /* ── 페이지 전환 오버레이 ── */
     #tx-overlay {
       position: fixed;
@@ -203,7 +264,7 @@
     <div class="hero-grid-pattern"></div>
     <div class="hero-body">
       <h1 class="hero-headline">
-        <span class="hl-naver">NAVER</span>
+        <span class="hl-naver">NAVER AD</span>
         <span class="hl-gc">Global Client</span>
         <span class="hl-program">Boost-Up Program</span>
       </h1>
@@ -232,6 +293,7 @@
             <div class="prog-hero-actions">
               <a href="mailto:dl_global_clients@navercorp.com" class="btn btn-primary" data-i18n="ph.cta">문의하기</a>
             </div>
+            <p style="margin-top:12px; font-size:0.82rem; color:var(--text-3);">dl_global_clients@navercorp.com</p>
           </div>
         </div>
       </div>
@@ -465,10 +527,12 @@
       e.preventDefault();
       var overlay = document.getElementById('tx-overlay');
       var detail  = document.getElementById('detail');
+      var hero    = document.querySelector('.hero');
       overlay.classList.add('active');
       setTimeout(function () {
         detail.style.display = 'block';
-        window.scrollTo({ top: detail.offsetTop, behavior: 'instant' });
+        hero.style.display = 'none';
+        window.scrollTo({ top: 0, behavior: 'instant' });
         overlay.classList.add('done');
         setTimeout(function () { overlay.remove(); }, 700);
       }, 700);
